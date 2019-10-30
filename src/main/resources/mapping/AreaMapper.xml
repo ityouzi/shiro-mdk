@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.AreaMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.Area">
+    <id column="area_id" jdbcType="INTEGER" property="areaId" />
+    <result column="area_num" jdbcType="VARCHAR" property="areaNum" />
+    <result column="area_province" jdbcType="VARCHAR" property="areaProvince" />
+    <result column="area_city" jdbcType="VARCHAR" property="areaCity" />
+    <result column="area_district" jdbcType="VARCHAR" property="areaDistrict" />
+    <result column="area_nickname" jdbcType="VARCHAR" property="areaNickname" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="createby" jdbcType="VARCHAR" property="createby" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_area
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.Area" keyProperty="area_id" useGeneratedKeys="true">
+    insert into tb_area (area_id, area_num, area_province, 
+      area_city, area_district, area_nickname, 
+      create_time, update_time, createby, 
+      yuliu1, yuliu2, yuliu3, 
+      yuliu4, yuliu5)
+    values (#{areaId,jdbcType=INTEGER}, #{areaNum,jdbcType=VARCHAR}, #{areaProvince,jdbcType=VARCHAR}, 
+      #{areaCity,jdbcType=VARCHAR}, #{areaDistrict,jdbcType=VARCHAR}, #{areaNickname,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{createby,jdbcType=VARCHAR}, 
+      #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}, #{yuliu3,jdbcType=VARCHAR}, 
+      #{yuliu4,jdbcType=VARCHAR}, #{yuliu5,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.Area">
+    update tb_area
+    set area_num = #{areaNum,jdbcType=VARCHAR},
+      area_province = #{areaProvince,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_district = #{areaDistrict,jdbcType=VARCHAR},
+      area_nickname = #{areaNickname,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      createby = #{createby,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select area_id, area_num, area_province, area_city, area_district, area_nickname, 
+    create_time, update_time, createby, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_area
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select area_id, area_num, area_province, area_city, area_district, area_nickname, 
+    create_time, update_time, createby, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_area
+    limit #{page}, #{limit}
+  </select>
+  <!--获取区域信息-->
+  <select id="selectByAreaNum" resultType="com.mdkproject.mdkshiro.entity.Area">
+    select * from tb_area where area_num = #{areaNum} limit 1
+  </select>
+
+
+
+
+</mapper>

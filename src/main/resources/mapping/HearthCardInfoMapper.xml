@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.HearthCardInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.HearthCardInfo">
+    <id column="health_id" jdbcType="INTEGER" property="healthId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="medical" jdbcType="VARCHAR" property="medical" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="health_num" jdbcType="VARCHAR" property="healthNum" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="print_time" jdbcType="VARCHAR" property="printTime" />
+    <result column="print_status" jdbcType="VARCHAR" property="printStatus" />
+    <result column="qr_code" jdbcType="VARCHAR" property="qrCode" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_hearth_card
+    where health_id = #{healthId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.HearthCardInfo" keyProperty="healthId" useGeneratedKeys="true">
+    insert into tb_hearth_card (health_id, name, age, 
+      gender, medical, id_card, 
+      health_num, start_time, end_time, 
+      print_time, print_status, qr_code, 
+      hospital_id, create_time, update_time, 
+      yuliu1, yuliu2, yuliu3, 
+      yuliu4, yuliu5)
+    values (#{healthId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{gender,jdbcType=VARCHAR}, #{medical,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{healthNum,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+      #{printTime,jdbcType=VARCHAR}, #{printStatus,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR}, 
+      #{hospitalId,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}, #{yuliu3,jdbcType=VARCHAR}, 
+      #{yuliu4,jdbcType=VARCHAR}, #{yuliu5,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.HearthCardInfo">
+    update tb_hearth_card
+    set name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=VARCHAR},
+      medical = #{medical,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      health_num = #{healthNum,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      print_time = #{printTime,jdbcType=VARCHAR},
+      print_status = #{printStatus,jdbcType=VARCHAR},
+      qr_code = #{qrCode,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where health_id = #{healthId,jdbcType=INTEGER}
+  </update>
+
+
+    <!--批量打印，修改打印状态-->
+    <update id="batchUpdateData" parameterType="java.util.List">
+        update tb_hearth_card set print_status = '1'
+        where health_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select health_id, name, age, gender, medical, id_card, health_num, start_time, end_time, 
+    print_time, print_status, qr_code, hospital_id, create_time, update_time, yuliu1, 
+    yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_hearth_card
+    where health_id = #{healthId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select health_id, name, age, gender, medical, id_card, health_num, start_time, end_time, 
+    print_time, print_status, qr_code, hospital_id, create_time, update_time, yuliu1, 
+    yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_hearth_card
+  </select>
+
+  <!--身份证号获取健康证-->
+  <select id="selectByIdCardNum" resultMap="BaseResultMap">
+    select * from tb_hearth_card where id_card = #{idcardNum} limit 1
+  </select>
+
+  <!--获取健康证信息&头像-->
+  <select id="selectByIdCardNum2" resultType="java.util.Map">
+    select th.health_id,th.yuliu2, th.age,th.`name`,th.gender,th.medical,th.end_time,th.health_num,th.hospital_id,th.qr_code,th.create_time,th.update_time,ti.idcard_photo
+    from tb_hearth_card th,tb_tijianinfo ti
+    where th.id_card=ti.idcard_num
+    and th.id_card=#{idCard} limit 1
+  </select>
+
+  <!--健康证详情-->
+  <select id="selectByHealthid" resultType="java.util.Map">
+    select th.age,th.`name`,th.gender,th.medical,th.end_time,th.health_num,th.hospital_id,th.qr_code,ti.idcard_photo
+    from tb_hearth_card th,tb_tijianinfo ti
+    where th.id_card=ti.idcard_num
+    and th.health_id=#{healthId}
+  </select>
+
+  <!--健康证打印状态数据-->
+  <select id="dayin" resultType="com.mdkproject.mdkshiro.entity.HearthCardInfo">
+    select * from tb_hearth_card
+    where medical = '0'
+    and print_status = #{printStatus}
+    and hospital_id = #{hospitalNum}
+    order by create_time desc
+    limit #{page},#{limit}
+  </select>
+
+  <!--健康证打印状态列表统计-->
+  <select id="dayinCount" resultType="java.lang.Integer">
+     select count(*) from tb_hearth_card
+     where medical = '0'
+     and hospital_id = #{hospitalNum}
+     and print_status = #{printStatus}
+  </select>
+
+  <!--不合格健康证列表-->
+  <select id="healthCardNoPass" resultType="com.mdkproject.mdkshiro.entity.HearthCardInfo">
+    select * from tb_hearth_card
+    where medical = '1'
+    and hospital_id = #{hospitalNum}
+    order by create_time desc
+    limit #{page},#{limit}
+  </select>
+
+  <!--不合格健康证列表统计-->
+  <select id="healthCardNoPassCount" resultType="java.lang.Integer">
+    select count(*) from tb_hearth_card
+    where medical = '1'
+    and hospital_id = #{hospitalNum}
+  </select>
+
+  <!--健康证多条件查询-->
+  <select id="keywordSelect" resultType="com.mdkproject.mdkshiro.entity.HearthCardInfo">
+    select * from tb_hearth_card
+    <where>
+        <if test="printStatus != null and printStatus != ''">
+            and print_status = #{printStatus}
+        </if>
+        <if test="status != null and status != ''">
+            and medical = #{status}
+        </if>
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="idCard != null and idCard != ''">
+            and id_card = #{idCard}
+        </if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            and (create_time between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 59:59:59'))
+        </if>
+    </where>
+    limit #{page},#{limit}
+  </select>
+  <!--健康证多条件查询统计-->
+  <select id="keywordSelectCount" resultType="java.lang.Integer">
+    select count(*) from tb_hearth_card
+    <where>
+      <if test="printStatus != null and printStatus != ''">
+        and print_status = #{printStatus}
+      </if>
+      <if test="status != null and status != ''">
+        and medical = #{status}
+      </if>
+      <if test="name != null and name != ''">
+        and name = #{name}
+      </if>
+      <if test="idCard != null and idCard != ''">
+        and id_card = #{idCard}
+      </if>
+      <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+        and (create_time between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 59:59:59'))
+      </if>
+    </where>
+  </select>
+
+  <!--当日发证合格人数-->
+  <select id="getTodayData" resultType="java.lang.Integer">
+    select count(*) from tb_hearth_card
+    where hospital_id=#{hospitalNum}
+    and medical = '0'
+    and to_days(create_time) = to_days(now())
+  </select>
+
+  <!--一天发证人数统计-->
+  <select id="tjAddfzWeekData" resultType="java.lang.Integer">
+    select count(*) from tb_hearth_card
+    where hospital_id=#{hospitalNum}
+    and yuliu1 = #{oneDay}
+  </select>
+
+
+
+  <!--批量录入健康证信息-->
+  <insert id="batchInsertData" parameterType="java.util.List" keyProperty="health_id" useGeneratedKeys="true">
+    insert into tb_hearth_card(
+        name, age, gender, medical, id_card, health_num, start_time, end_time,
+        print_time, print_status, qr_code, hospital_id, create_time, update_time, yuliu1,
+        yuliu2, yuliu3, yuliu4, yuliu5
+    )
+    values
+    <foreach collection="list" item="entity" index="index" separator=",">
+      (
+      #{entity.name},
+      #{entity.age},
+      #{entity.gender},
+      #{entity.medical},
+      #{entity.idCard},
+      #{entity.healthNum},
+      #{entity.startTime},
+      #{entity.endTime},
+      #{entity.printTime},
+      #{entity.printStatus},
+      #{entity.qrCode},
+      #{entity.hospitalId},
+      #{entity.createTime},
+      #{entity.updateTime},
+      #{entity.yuliu1},
+      #{entity.yuliu2},
+      #{entity.yuliu3},
+      #{entity.yuliu4},
+      #{entity.yuliu5}
+      )
+    </foreach>
+  </insert>
+</mapper>

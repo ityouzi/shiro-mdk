@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.KeyCodeMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.KeyCode">
+    <id column="key_id" jdbcType="INTEGER" property="keyId" />
+    <result column="key_code" jdbcType="VARCHAR" property="keyCode" />
+    <result column="key_status" jdbcType="INTEGER" property="keyStatus" />
+    <result column="hospital_num" jdbcType="VARCHAR" property="hospitalNum" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_keycode
+    where key_id = #{keyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.KeyCode">
+    insert into tb_keycode (key_id, key_code, key_status, 
+      hospital_num, create_time, update_time
+      )
+    values (#{keyId,jdbcType=INTEGER}, #{keyCode,jdbcType=VARCHAR}, #{keyStatus,jdbcType=INTEGER}, 
+      #{hospitalNum,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.KeyCode">
+    update tb_keycode
+    set key_code = #{keyCode,jdbcType=VARCHAR},
+      key_status = #{keyStatus,jdbcType=INTEGER},
+      hospital_num = #{hospitalNum,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where key_id = #{keyId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select key_id, key_code, key_status, hospital_num, create_time, update_time
+    from tb_keycode
+    where key_id = #{keyId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select key_id, key_code, key_status, hospital_num, create_time, update_time
+    from tb_keycode
+    order by create_time desc
+    limit #{page1},#{limit1}
+  </select>
+
+  <select id="selectBykeyCode" resultType="com.mdkproject.mdkshiro.entity.KeyCode">
+    select * from tb_keycode
+    where key_code = #{key} limit 1
+  </select>
+
+  <!--激活码列表统计-->
+  <select id="keyListCount" resultType="java.lang.Integer">
+    select count(*) from tb_keycode
+  </select>
+</mapper>

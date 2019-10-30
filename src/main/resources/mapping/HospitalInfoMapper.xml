@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.HospitalInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.HospitalInfo">
+    <id column="hospital_id" jdbcType="INTEGER" property="hospitalId" />
+    <result column="hospital_name" jdbcType="VARCHAR" property="hospitalName" />
+    <result column="hospital_num" jdbcType="VARCHAR" property="hospitalNum" />
+    <result column="hospital_gz" jdbcType="VARCHAR" property="hospitalGz" />
+    <result column="hospital_province" jdbcType="VARCHAR" property="hospitalProvince" />
+    <result column="hospital_city" jdbcType="VARCHAR" property="hospitalCity" />
+    <result column="hospital_district" jdbcType="VARCHAR" property="hospitalDistrict" />
+    <result column="hospital_address" jdbcType="VARCHAR" property="hospitalAddress" />
+    <result column="area_num" jdbcType="VARCHAR" property="areaNum" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="hospital_tel" jdbcType="VARCHAR" property="hospitalTel" />
+    <result column="bz" jdbcType="VARCHAR" property="bz" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_hospital
+    where hospital_id = #{hospitalId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.HospitalInfo">
+    insert into tb_hospital (hospital_id, hospital_name, hospital_num, 
+      hospital_gz, hospital_province, hospital_city, 
+      hospital_district, hospital_address, area_num, 
+      create_time, update_time, hospital_tel, 
+      bz, yuliu1, yuliu2, 
+      yuliu3, yuliu4, yuliu5
+      )
+    values (#{hospitalId,jdbcType=INTEGER}, #{hospitalName,jdbcType=VARCHAR}, #{hospitalNum,jdbcType=VARCHAR}, 
+      #{hospitalGz,jdbcType=VARCHAR}, #{hospitalProvince,jdbcType=VARCHAR}, #{hospitalCity,jdbcType=VARCHAR}, 
+      #{hospitalDistrict,jdbcType=VARCHAR}, #{hospitalAddress,jdbcType=VARCHAR}, #{areaNum,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{hospitalTel,jdbcType=VARCHAR}, 
+      #{bz,jdbcType=VARCHAR}, #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}, 
+      #{yuliu3,jdbcType=VARCHAR}, #{yuliu4,jdbcType=VARCHAR}, #{yuliu5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.HospitalInfo">
+    update tb_hospital
+    set hospital_name = #{hospitalName,jdbcType=VARCHAR},
+      hospital_num = #{hospitalNum,jdbcType=VARCHAR},
+      hospital_gz = #{hospitalGz,jdbcType=VARCHAR},
+      hospital_province = #{hospitalProvince,jdbcType=VARCHAR},
+      hospital_city = #{hospitalCity,jdbcType=VARCHAR},
+      hospital_district = #{hospitalDistrict,jdbcType=VARCHAR},
+      hospital_address = #{hospitalAddress,jdbcType=VARCHAR},
+      area_num = #{areaNum,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      hospital_tel = #{hospitalTel,jdbcType=VARCHAR},
+      bz = #{bz,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where hospital_id = #{hospitalId,jdbcType=INTEGER}
+  </update>
+
+
+  <!--医院模板管理-->
+  <update id="updateTemplate">
+    update tb_hospital
+    <set>
+      <if test="templateNum != null and templateNum != ''">
+        yuliu1 = #{templateNum}
+      </if>
+    </set>
+    where hospital_id = #{hospitalId} limit 1
+  </update>
+
+
+  <!--医院每天处理体检人数控制-->
+  <update id="updatetjNum">
+    update tb_hospital
+    <set>
+      <if test="num != null and num != ''">
+        yuliu2 = #{num}
+      </if>
+    </set>
+    where hospital_id = #{hospitalId} limit 1
+  </update>
+
+  <!--设置医院体检时间-->
+  <update id="UpdateHospitalTime">
+    update tb_hospital
+    <set>
+      <if test="time != null and time != ''">
+        yuliu3 = #{time}
+      </if>
+    </set>
+    where hospital_id = #{hospitalId} limit 1
+  </update>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select hospital_id, hospital_name, hospital_num, hospital_gz, hospital_province, 
+    hospital_city, hospital_district, hospital_address, area_num, create_time, update_time, 
+    hospital_tel, bz, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_hospital
+    where hospital_id = #{hospitalId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select hospital_id, hospital_name, hospital_num, hospital_gz, hospital_province, 
+    hospital_city, hospital_district, hospital_address, area_num, create_time, update_time, 
+    hospital_tel, bz, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_hospital
+  </select>
+
+  <!--依据区域编号获取对应的医院集合-->
+  <select id="selectHospitalByAreaNum" resultMap="BaseResultMap">
+    select * from tb_hospital
+    where area_num = #{areaNum}
+  </select>
+
+  <!--医院列表-->
+  <select id="hospitalList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select * from tb_hospital limit #{page},#{limit}
+  </select>
+  
+  <!--医院数量统计-->
+  <select id="hospitalCount" resultType="int">
+    select count(*) from tb_hospital
+  </select>
+
+  <!--获取医院信息通过医院编号-->
+  <select id="selectByHospitalNum" resultType="com.mdkproject.mdkshiro.entity.HospitalInfo">
+     select * from tb_hospital where hospital_num = #{hospitalNum} limit 1
+  </select>
+
+
+  <!--获取医院编号集合-->
+  <select id="hospitalNumListByAreaNum" resultType="java.lang.String">
+    select hospital_num from tb_hospital
+    where area_num = #{areaNum}
+  </select>
+
+
+</mapper>

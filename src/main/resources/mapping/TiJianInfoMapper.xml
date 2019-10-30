@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.TiJianInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.TiJianInfo">
+    <id column="tj_id" jdbcType="INTEGER" property="tjId" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="telphone" jdbcType="VARCHAR" property="telphone" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="idcard_num" jdbcType="VARCHAR" property="idcardNum" />
+    <result column="hearthcard_num" jdbcType="VARCHAR" property="hearthcardNum" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="adress" jdbcType="VARCHAR" property="adress" />
+    <result column="idcard_photo" jdbcType="VARCHAR" property="idcardPhoto" />
+    <result column="startdate" jdbcType="VARCHAR" property="startdate" />
+    <result column="enddate" jdbcType="VARCHAR" property="enddate" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="dept_num" jdbcType="VARCHAR" property="deptNum" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_tijianinfo
+    where tj_id = #{tjId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.TiJianInfo" keyProperty="tjId" useGeneratedKeys="true">
+    insert into tb_tijianinfo (tj_id, number, telphone, 
+      name, sex, age, idcard_num, 
+      hearthcard_num, company, adress, 
+      idcard_photo, startdate, enddate, 
+      person, status, dept_num, 
+      create_time, update_time, yuliu1, 
+      yuliu2, yuliu3, yuliu4, 
+      yuliu5)
+    values (#{tjId,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{idcardNum,jdbcType=VARCHAR}, 
+      #{hearthcardNum,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{adress,jdbcType=VARCHAR}, 
+      #{idcardPhoto,jdbcType=VARCHAR}, #{startdate,jdbcType=VARCHAR}, #{enddate,jdbcType=VARCHAR}, 
+      #{person,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{deptNum,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{yuliu1,jdbcType=VARCHAR}, 
+      #{yuliu2,jdbcType=VARCHAR}, #{yuliu3,jdbcType=VARCHAR}, #{yuliu4,jdbcType=VARCHAR}, 
+      #{yuliu5,jdbcType=VARCHAR})
+  </insert>
+
+
+
+
+  <!--excel导入导出-->
+  <insert id="batchInsert">
+    insert into tb_tijianinfo (telphone,
+      name, sex, idcard_num,hearthcard_num,
+      idcard_photo, startdate, enddate,
+      status, dept_num,
+      create_time, yuliu1,
+      yuliu2, yuliu3)
+    values
+      <foreach collection="list" item="entity" index="index" separator=",">
+        (
+          #{entity.telphone},
+          #{entity.name},
+          #{entity.sex},
+          #{entity.idcardNum},
+          #{entity.hearthcardNum},
+          #{entity.idcardPhoto},
+          #{entity.startdate},
+          #{entity.enddate},
+          #{entity.status},
+          #{entity.deptNum},
+          #{entity.createTime},
+          #{entity.yuliu1},
+          #{entity.yuliu2},
+          #{entity.yuliu3}
+        )
+      </foreach>
+
+  </insert>
+
+
+
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.TiJianInfo">
+    update tb_tijianinfo
+    set number = #{number,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      idcard_num = #{idcardNum,jdbcType=VARCHAR},
+      hearthcard_num = #{hearthcardNum,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      adress = #{adress,jdbcType=VARCHAR},
+      idcard_photo = #{idcardPhoto,jdbcType=VARCHAR},
+      startdate = #{startdate,jdbcType=VARCHAR},
+      enddate = #{enddate,jdbcType=VARCHAR},
+      person = #{person,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      dept_num = #{deptNum,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where tj_id = #{tjId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select tj_id, number, telphone, name, sex, age, idcard_num, hearthcard_num, company, 
+    adress, idcard_photo, startdate, enddate, person, status, dept_num, create_time, 
+    update_time, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_tijianinfo
+    where tj_id = #{tjId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select tj_id, number, telphone, name, sex, age, idcard_num, hearthcard_num, company, 
+    adress, idcard_photo, startdate, enddate, person, status, dept_num, create_time, 
+    update_time, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_tijianinfo
+  </select>
+
+  <!--依据身份证号获取-->
+  <select id="selectByIdCardNum" resultMap="BaseResultMap">
+    select * from tb_tijianinfo
+    where idcard_num = #{idcardNum}
+    limit 1
+  </select>
+
+  <!--获取体检当月体检数据-->
+  <select id="getMonthData" resultType="java.lang.Integer">
+    select count(*) from tb_tijianinfo
+    where dept_num = #{hospitalNum}
+    and date_format(create_time,'%Y%m') = date_format(curdate(),'%Y%m')
+  </select>
+
+  <!--获取体检最近一周数据-->
+  <select id="getWeekData" resultType="com.mdkproject.mdkshiro.entity.TiJianInfo">
+    select * from tb_tijianinfo
+    where DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+    and status = #{status}
+    and dept_num = #{hospitalNum}
+    order by create_time desc
+    limit #{page},#{limit}
+  </select>
+  <!--获取体检最近一周数据统计-->
+  <select id="getWeekDataCount" resultType="java.lang.Integer">
+    select count(*) from tb_tijianinfo
+    where DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+    and status = #{status}
+    and dept_num = #{hospitalNum}
+  </select>
+
+  <!--查询当日体检人数-->
+  <select id="getTodayData" resultType="java.lang.Integer">
+    select count(*) from tb_tijianinfo
+    where dept_num = #{hospitalNum}
+    and to_days(create_time) = to_days(now())
+  </select>
+
+  <!--查询一家医院体检总人数-->
+  <select id="getAllByHospitalNum" resultType="java.lang.Integer">
+    select count(*) from tb_tijianinfo where dept_num = #{hospitalNum}
+  </select>
+
+  <!--体检审核状态列表-->
+  <select id="getStatusList" resultType="com.mdkproject.mdkshiro.entity.TiJianInfo">
+    select * from tb_tijianinfo
+    where status = #{status}
+    and dept_num = #{hospitalNum}
+    limit #{page},#{limit}
+  </select>
+
+  <!--体检审核状态列表统计-->
+  <select id="getStatusListCount" resultType="java.lang.Integer">
+    select count(*) from tb_tijianinfo
+    where status = #{status}
+    and dept_num = #{hospitalNum}
+  </select>
+
+  <!--体检信息审核多条件查询-->
+  <select id="keywordSelect" resultType="com.mdkproject.mdkshiro.entity.TiJianInfo">
+    select * from tb_tijianinfo
+    where 1=1
+    <if test="name != null and name != ''">
+      and name = #{name}
+    </if>
+    <if test="idcardNum != null and idcardNum != ''">
+      and idcard_num = #{idcardNum}
+    </if>
+    <if test="number != null and number != ''">
+      and number = #{number}
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+      and (create_time between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 59:59:59'))
+    </if>
+  </select>
+
+  <!--一天体检人数统计-->
+  <select id="tjAddfzWeekData" resultType="java.lang.Integer">
+    select count(*) from tb_tijianinfo
+    where dept_num = #{hospitalNum}
+    and yuliu2=#{oneDay}
+  </select>
+
+  <!--区域+医院+时间+分页-->
+  <select id="selectByAreaNumAndHospitalNum" resultType="com.mdkproject.mdkshiro.entity.TiJianInfo">
+    select * from tb_tijianinfo
+    where dept_num = #{hospitalNum}
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+      and (create_time between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 59:59:59'))
+    </if>
+    order by create_time desc
+    limit #{page},#{limit}
+  </select>
+
+  <!--区域+医院+时间(统计)-->
+  <select id="selectHospitalNumCount" resultType="java.lang.Integer">
+    select count(*) from tb_tijianinfo
+    where dept_num = #{hospitalNum}
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+      and (create_time between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 59:59:59'))
+    </if>
+  </select>
+
+  <!--单条审核更新-->
+  <update id="OneupdateTJstatus" parameterType="java.lang.String">
+    update tb_tijianinfo
+    <set>
+      <if test="status != null and status !=''">
+        status = #{status},
+      </if>
+      <if test="startdate != null and startdate !=''">
+        startdate = #{startdate},
+      </if>
+      <if test="enddate != null and enddate !=''">
+        enddate = #{enddate},
+      </if>
+      <if test="why != null and why !=''">
+        yuliu4 = #{why}
+      </if>
+    </set>
+    where tj_id = #{tjId} limit 1
+  </update>
+
+  <!--批量审核-->
+  <update id="batchUpTJdate">
+    update tb_tijianinfo
+    <set>
+      <if test="status != null and status !=''">
+        status = #{status},
+      </if>
+      <if test="startdate != null and startdate !=''">
+        startdate = #{startdate},
+      </if>
+      <if test="enddate != null and enddate !=''">
+        enddate = #{enddate},
+      </if>
+      <if test="why != null and why !=''">
+        yuliu4 = #{why}
+      </if>
+    </set>
+    where tj_id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+  </update>
+
+  <!--web端补录-->
+  <update id="updateByKey">
+    update tb_tijianinfo
+    <set>
+      <if test="telphone != null and telphone != ''">
+        telphone = #{telphone},
+      </if>
+      <if test="name != null and name != ''">
+        name = #{name},
+      </if>
+      <if test="sex != null and sex != ''">
+        sex = #{sex},
+      </if>
+      <if test="age != null and age != ''">
+        age = #{age},
+      </if>
+      <if test="idcardNum != null and idcardNum != ''">
+        idcard_num = #{idcardNum},
+      </if>
+      <if test="company != null and company != ''">
+        company = #{company},
+      </if>
+      <if test="adress != null and adress != ''">
+        adress = #{adress},
+      </if>
+      <if test="idcardPhoto != null and idcardPhoto != ''">
+        idcard_photo = #{idcardPhoto},
+      </if>
+      <if test="startdate != null and startdate != ''">
+        startdate = #{startdate},
+      </if>
+      <if test="enddate != null and enddate != ''">
+        enddate = #{enddate},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime}
+      </if>
+    </set>
+    where tj_id = #{tjId}
+  </update>
+
+
+  <!--获取体检机构最新一条数据-->
+  <select id="getNewData" resultType="java.lang.String">
+    select t.hearthcard_num from tb_tijianinfo t where t.dept_num=#{hospitalNum}
+    order by t.tj_id desc limit 1
+  </select>
+
+</mapper>

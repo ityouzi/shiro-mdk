@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.SignMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.Sign">
+    <id column="sign_id" jdbcType="INTEGER" property="signId" />
+    <result column="person_idcard" jdbcType="VARCHAR" property="personIdcard" />
+    <result column="xin" jdbcType="VARCHAR" property="xin" />
+    <result column="gan" jdbcType="VARCHAR" property="gan" />
+    <result column="pi" jdbcType="VARCHAR" property="pi" />
+    <result column="fei" jdbcType="VARCHAR" property="fei" />
+    <result column="pifu" jdbcType="VARCHAR" property="pifu" />
+    <result column="qt" jdbcType="VARCHAR" property="qt" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="sx" jdbcType="VARCHAR" property="sx" />
+    <result column="zjx" jdbcType="VARCHAR" property="zjx" />
+    <result column="sbsz" jdbcType="VARCHAR" property="sbsz" />
+    <result column="yx" jdbcType="VARCHAR" property="yx" />
+    <result column="sc" jdbcType="VARCHAR" property="sc" />
+    <result column="hn" jdbcType="VARCHAR" property="hn" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_sign
+    where sign_id = #{signId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.Sign">
+    insert into tb_sign (sign_id, person_idcard, xin, 
+      gan, pi, fei, pifu, 
+      qt, doctor, create_time, 
+      update_time, sx, zjx, 
+      sbsz, yx, sc, hn, 
+      yuliu1, yuliu2, yuliu3, 
+      yuliu4, yuliu5)
+    values (#{signId,jdbcType=INTEGER}, #{personIdcard,jdbcType=VARCHAR}, #{xin,jdbcType=VARCHAR}, 
+      #{gan,jdbcType=VARCHAR}, #{pi,jdbcType=VARCHAR}, #{fei,jdbcType=VARCHAR}, #{pifu,jdbcType=VARCHAR}, 
+      #{qt,jdbcType=VARCHAR}, #{doctor,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR}, #{sx,jdbcType=VARCHAR}, #{zjx,jdbcType=VARCHAR}, 
+      #{sbsz,jdbcType=VARCHAR}, #{yx,jdbcType=VARCHAR}, #{sc,jdbcType=VARCHAR}, #{hn,jdbcType=VARCHAR}, 
+      #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}, #{yuliu3,jdbcType=VARCHAR}, 
+      #{yuliu4,jdbcType=VARCHAR}, #{yuliu5,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.Sign">
+    update tb_sign
+    set person_idcard = #{personIdcard,jdbcType=VARCHAR},
+      xin = #{xin,jdbcType=VARCHAR},
+      gan = #{gan,jdbcType=VARCHAR},
+      pi = #{pi,jdbcType=VARCHAR},
+      fei = #{fei,jdbcType=VARCHAR},
+      pifu = #{pifu,jdbcType=VARCHAR},
+      qt = #{qt,jdbcType=VARCHAR},
+      doctor = #{doctor,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      sx = #{sx,jdbcType=VARCHAR},
+      zjx = #{zjx,jdbcType=VARCHAR},
+      sbsz = #{sbsz,jdbcType=VARCHAR},
+      yx = #{yx,jdbcType=VARCHAR},
+      sc = #{sc,jdbcType=VARCHAR},
+      hn = #{hn,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where sign_id = #{signId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select sign_id, person_idcard, xin, gan, pi, fei, pifu, qt, doctor, create_time, 
+    update_time, sx, zjx, sbsz, yx, sc, hn, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_sign
+    where sign_id = #{signId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sign_id, person_idcard, xin, gan, pi, fei, pifu, qt, doctor, create_time, 
+    update_time, sx, zjx, sbsz, yx, sc, hn, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_sign
+  </select>
+
+  <!--身份证号查询-->
+  <select id="findByIdCardNum" resultType="com.mdkproject.mdkshiro.entity.Sign">
+    select xin,gan,pi,fei,sx,zjx,sbsz,yx,sc,hn from tb_sign where person_idcard = #{personIdcard} limit 1
+  </select>
+</mapper>

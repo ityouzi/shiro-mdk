@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.SickNessHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.SickNessHistory">
+    <id column="sickness_id" jdbcType="INTEGER" property="sicknessId" />
+    <result column="person_idcard" jdbcType="VARCHAR" property="personIdcard" />
+    <result column="ganyan" jdbcType="VARCHAR" property="ganyan" />
+    <result column="liji" jdbcType="VARCHAR" property="liji" />
+    <result column="shanghan" jdbcType="VARCHAR" property="shanghan" />
+    <result column="feijiehe" jdbcType="VARCHAR" property="feijiehe" />
+    <result column="pifubing" jdbcType="VARCHAR" property="pifubing" />
+    <result column="qt" jdbcType="VARCHAR" property="qt" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_sickness_history
+    where sickness_id = #{sicknessId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.SickNessHistory">
+    insert into tb_sickness_history (sickness_id, person_idcard, ganyan, 
+      liji, shanghan, feijiehe, 
+      pifubing, qt, create_time, 
+      update_time, yuliu1, yuliu2, 
+      yuliu3, yuliu4, yuliu5
+      )
+    values (#{sicknessId,jdbcType=INTEGER}, #{personIdcard,jdbcType=VARCHAR}, #{ganyan,jdbcType=VARCHAR}, 
+      #{liji,jdbcType=VARCHAR}, #{shanghan,jdbcType=VARCHAR}, #{feijiehe,jdbcType=VARCHAR}, 
+      #{pifubing,jdbcType=VARCHAR}, #{qt,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR}, #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}, 
+      #{yuliu3,jdbcType=VARCHAR}, #{yuliu4,jdbcType=VARCHAR}, #{yuliu5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.SickNessHistory">
+    update tb_sickness_history
+    set person_idcard = #{personIdcard,jdbcType=VARCHAR},
+      ganyan = #{ganyan,jdbcType=VARCHAR},
+      liji = #{liji,jdbcType=VARCHAR},
+      shanghan = #{shanghan,jdbcType=VARCHAR},
+      feijiehe = #{feijiehe,jdbcType=VARCHAR},
+      pifubing = #{pifubing,jdbcType=VARCHAR},
+      qt = #{qt,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where sickness_id = #{sicknessId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select sickness_id, person_idcard, ganyan, liji, shanghan, feijiehe, pifubing, qt, 
+    create_time, update_time, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_sickness_history
+    where sickness_id = #{sicknessId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sickness_id, person_idcard, ganyan, liji, shanghan, feijiehe, pifubing, qt, 
+    create_time, update_time, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_sickness_history
+  </select>
+
+
+  <!--身份证号查询-->
+  <select id="findByIdCardNum" resultType="com.mdkproject.mdkshiro.entity.SickNessHistory">
+    select ganyan,liji,shanghan,feijiehe,pifubing from tb_sickness_history where person_idcard = #{personIdcard} limit 1
+  </select>
+
+
+</mapper>

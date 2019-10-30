@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.JieLunMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.JieLun">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="jielun" jdbcType="VARCHAR" property="jielun" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="yijian" jdbcType="VARCHAR" property="yijian" />
+    <result column="gz" jdbcType="VARCHAR" property="gz" />
+    <result column="person_idcard" jdbcType="VARCHAR" property="personIdcard" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="no_project" jdbcType="VARCHAR" property="noProject" />
+    <result column="hearth_cardid" jdbcType="VARCHAR" property="hearthCardid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="yl1" jdbcType="VARCHAR" property="yl1" />
+    <result column="yl2" jdbcType="VARCHAR" property="yl2" />
+    <result column="yl3" jdbcType="VARCHAR" property="yl3" />
+    <result column="yl4" jdbcType="VARCHAR" property="yl4" />
+    <result column="yl5" jdbcType="VARCHAR" property="yl5" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_jielun
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.JieLun">
+    insert into tb_jielun (id, jielun, doctor, 
+      yijian, gz, person_idcard, 
+      status, no_project, hearth_cardid, 
+      name, sex, age, number, 
+      company, yl1, yl2, 
+      yl3, yl4, yl5, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{jielun,jdbcType=VARCHAR}, #{doctor,jdbcType=VARCHAR}, 
+      #{yijian,jdbcType=VARCHAR}, #{gz,jdbcType=VARCHAR}, #{personIdcard,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{noProject,jdbcType=VARCHAR}, #{hearthCardid,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, 
+      #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR}, #{yl5,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.JieLun">
+    update tb_jielun
+    set jielun = #{jielun,jdbcType=VARCHAR},
+      doctor = #{doctor,jdbcType=VARCHAR},
+      yijian = #{yijian,jdbcType=VARCHAR},
+      gz = #{gz,jdbcType=VARCHAR},
+      person_idcard = #{personIdcard,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      no_project = #{noProject,jdbcType=VARCHAR},
+      hearth_cardid = #{hearthCardid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      number = #{number,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      yl1 = #{yl1,jdbcType=VARCHAR},
+      yl2 = #{yl2,jdbcType=VARCHAR},
+      yl3 = #{yl3,jdbcType=VARCHAR},
+      yl4 = #{yl4,jdbcType=VARCHAR},
+      yl5 = #{yl5,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, jielun, doctor, yijian, gz, person_idcard, status, no_project, hearth_cardid, 
+    name, sex, age, number, company, yl1, yl2, yl3, yl4, yl5, create_time, update_time
+    from tb_jielun
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, jielun, doctor, yijian, gz, person_idcard, status, no_project, hearth_cardid, 
+    name, sex, age, number, company, yl1, yl2, yl3, yl4, yl5, create_time, update_time
+    from tb_jielun
+  </select>
+
+  <!--获取当前医院体检项目数据（统计）-->
+  <select id="getDataByHospitalNumCount" resultType="java.lang.Integer">
+    select count(*) from tb_jielun where yl1 = #{hospitalNum}
+  </select>
+
+  <!--获取当前医院体检项目数据-->
+  <select id="getDataByHospitalNum" resultType="com.mdkproject.mdkshiro.entity.JieLun">
+    select * from tb_jielun
+    where 1=1
+    <if test="hospitalNum != null and hospitalNum != ''">
+      and yl1 = #{hospitalNum}
+    </if>
+    limit #{page},#{limit}
+  </select>
+
+
+</mapper>

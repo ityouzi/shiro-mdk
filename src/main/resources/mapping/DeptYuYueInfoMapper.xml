@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.DeptYuYueInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.DeptYuYueInfo">
+    <id column="dept_id" jdbcType="INTEGER" property="deptId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
+    <result column="dept_imgurl" jdbcType="VARCHAR" property="deptImgurl" />
+    <result column="dept_shenhe" jdbcType="VARCHAR" property="deptShenhe" />
+    <result column="dept_tjcode" jdbcType="VARCHAR" property="deptTjcode" />
+    <result column="dept_time" jdbcType="VARCHAR" property="deptTime" />
+    <result column="dept_phone" jdbcType="VARCHAR" property="deptPhone" />
+    <result column="dept_peoplenum" jdbcType="INTEGER" property="deptPeoplenum" />
+    <result column="dept_yuanyin" jdbcType="VARCHAR" property="deptYuanyin" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="tjstatus" jdbcType="VARCHAR" property="tjstatus" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_deptup
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.DeptYuYueInfo" keyProperty="deptId" useGeneratedKeys="true">
+    insert into tb_deptup (dept_id, dept_name, dept_code, 
+      dept_imgurl, dept_shenhe, dept_tjcode, 
+      dept_time, dept_phone, dept_peoplenum, 
+      dept_yuanyin, create_time, update_time, 
+      tjstatus, yuliu1, yuliu2, 
+      yuliu3, yuliu4, yuliu5
+      )
+    values (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{deptImgurl,jdbcType=VARCHAR}, #{deptShenhe,jdbcType=VARCHAR}, #{deptTjcode,jdbcType=VARCHAR}, 
+      #{deptTime,jdbcType=VARCHAR}, #{deptPhone,jdbcType=VARCHAR}, #{deptPeoplenum,jdbcType=INTEGER}, 
+      #{deptYuanyin,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{tjstatus,jdbcType=VARCHAR}, #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}, 
+      #{yuliu3,jdbcType=VARCHAR}, #{yuliu4,jdbcType=VARCHAR}, #{yuliu5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.DeptYuYueInfo">
+    update tb_deptup
+    set dept_name = #{deptName,jdbcType=VARCHAR},
+      dept_code = #{deptCode,jdbcType=VARCHAR},
+      dept_imgurl = #{deptImgurl,jdbcType=VARCHAR},
+      dept_shenhe = #{deptShenhe,jdbcType=VARCHAR},
+      dept_tjcode = #{deptTjcode,jdbcType=VARCHAR},
+      dept_time = #{deptTime,jdbcType=VARCHAR},
+      dept_phone = #{deptPhone,jdbcType=VARCHAR},
+      dept_peoplenum = #{deptPeoplenum,jdbcType=INTEGER},
+      dept_yuanyin = #{deptYuanyin,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      tjstatus = #{tjstatus,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select dept_id, dept_name, dept_code, dept_imgurl, dept_shenhe, dept_tjcode, dept_time, 
+    dept_phone, dept_peoplenum, dept_yuanyin, create_time, update_time, tjstatus, yuliu1, 
+    yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_deptup
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </select>
+  <!--单位预约列表-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select dept_id, dept_name, dept_code, dept_imgurl, dept_shenhe, dept_tjcode, dept_time, 
+    dept_phone, dept_peoplenum, dept_yuanyin, create_time, update_time, tjstatus, yuliu1, 
+    yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_deptup
+    where dept_tjcode = #{hospitalNum}
+    and dept_shenhe = #{deptShenhe}
+    order by create_time desc
+    limit #{page}, #{limit}
+  </select>
+
+  <!--单位预约资质审核-->
+  <update id="updateByDeptId">
+    update tb_deptup
+    <set>
+      <if test="deptShenhe != null and deptShenhe != ''">
+        dept_shenhe = #{deptShenhe},
+      </if>
+      <if test="time != null and time != ''">
+        dept_time = #{time},
+      </if>
+      <if test="why != null and why != ''">
+        dept_yuanyin = #{why},
+      </if>
+        update_time = #{updateTime}
+    </set>
+    where dept_id = #{deptId}
+  </update>
+
+  <!--修改体检时间-->
+  <update id="updateTJtime">
+    update tb_deptup
+    <set>
+      <if test="time != null and time != ''">
+        dept_time = #{time}
+      </if>
+    </set>
+    where dept_id = #{deptId}
+  </update>
+
+
+    <!--单位预约审核状态统计-->
+  <select id="deptCountBYhospitalNum" resultType="int">
+    select count(*) from tb_deptup
+    where dept_tjcode = #{hospitalNum}
+    and dept_shenhe = #{deptShenhe}
+  </select>
+
+  <!--待审核总数-->
+  <select id="dshCount" resultType="int">
+    select count(*) from tb_deptup
+    where dept_tjcode = #{hospitalNum}
+    and dept_shenhe = #{status}
+  </select>
+  <!--已审核总数-->
+  <select id="yshCount" resultType="int">
+    select count(*) from tb_deptup
+    where dept_tjcode = #{hospitalNum}
+    and dept_shenhe = #{status1} or dept_shenhe = #{status2}
+  </select>
+
+  <!--依据单位征信代码查询-->
+  <select id="selectBYcompanyCode" resultMap="BaseResultMap">
+    select * from tb_deptup
+    where dept_code = #{deptCode}
+  </select>
+
+  <!--关键字检索-->
+  <select id="keywordSelect" resultMap="BaseResultMap">
+    select * from tb_deptup
+    where 1=1
+    <if test="hospitalNum != null and hospitalNum != ''">
+      and dept_tjcode = #{hospitalNum}
+    </if>
+    <if test="deptCode != null">
+      and dept_code = #{deptCode},
+    </if>
+    <if test="deptName != null">
+      and dept_name = #{deptName},
+    </if>
+    <if test="deptShenhe != null">
+      and dept_shenhe = #{deptShenhe}
+    </if>
+  </select>
+
+  <!--当日预约单位数-->
+  <select id="getTodayData" resultType="java.lang.Integer">
+    select count(*) from tb_deptup
+    where dept_tjcode = #{hospitalNum}
+    and to_days(create_time) = to_days(now())
+
+  </select>
+  <!--获取一周每一天数据-->
+  <select id="getOneData" resultType="java.lang.Integer">
+    select IF(ISNULL(SUM(dept_peoplenum)),0,SUM(dept_peoplenum)) from tb_deptup
+    where dept_tjcode = #{hospitalNum}
+    and (create_time between CONCAT(#{oneDay},' 00:00:00') and CONCAT(#{oneDay},' 59:59:59'))
+  </select>
+
+  <!--判断是否是第一次预约，如果不是依据征信代码，判断审核状态-->
+  <select id="selectByCompanyCode" resultType="com.mdkproject.mdkshiro.entity.DeptYuYueInfo">
+    select * from tb_deptup
+    where dept_code = #{deptOrganization}
+    limit 1
+  </select>
+
+  <!--该单位最近一天预约数据-->
+  <select id="getZuiJinOneOrder" resultType="com.mdkproject.mdkshiro.entity.DeptYuYueInfo">
+    select * from tb_deptup where dept_code = #{deptCode}
+    order by dept_id desc limit 1
+  </select>
+
+  <!--判断失信次数,状态为0-->
+  <select id="yuyueCount" resultType="java.lang.Integer">
+    select count(*) from tb_deptup
+    where dept_code = #{deptCode}
+    and tjstatus = '0'
+  </select>
+
+  <!--预约未体检&预约已体检列表-->
+  <select id="tjStatusList" resultType="com.mdkproject.mdkshiro.entity.DeptYuYueInfo">
+    select * from tb_deptup
+    where dept_tjcode = #{hospitalNum}
+    and dept_shenhe = '1'
+    and tjstatus = #{tjStatus}
+    order by create_time desc
+  </select>
+  <!--预约未体检&预约已体检列表统计-->
+  <select id="tjStatusListCount" resultType="java.lang.Integer">
+     select count(*) from tb_deptup
+     where dept_tjcode = #{hospitalNum}
+     and dept_shenhe = '1'
+    and tjstatus = #{tjStatus}
+  </select>
+
+  <!--当天是否可以继续预约-->
+<!--  <select id="companyOrder" resultType="java.lang.Integer">-->
+<!--    select IF(ISNULL(SUM(dept_peoplenum)),0,SUM(dept_peoplenum)) from tb_deptup-->
+<!--    where dept_tjcode = #{hospitalNum}-->
+<!--    and (create_time between CONCAT(#{time},' 00:00:00') and CONCAT(#{time},' 59:59:59'))-->
+<!--  </select>-->
+
+
+  <!--获取一天时间段内预约人数和-->
+<!--  <select id="companyOrder" resultType="java.util.Map">-->
+<!--    select date_format(create_time,'%p') as APM, sum(ifnull(dept_peoplenum,0)) as total_num from tb_deptup-->
+<!--    where dept_tjcode = #{hospitalNum}-->
+<!--    and (create_time between concat(#{time},' 00:00:00') and concat(#{time},' 12:00:00')-->
+<!--            or create_time between concat(#{time},' 12:00:00') and concat(#{time},' 24:00:00')-->
+<!--        )-->
+<!--    group by date_format(create_time,'%p')-->
+<!--  </select>-->
+
+
+  <select id="companyOrder" resultType="java.util.Map">
+    select a.APM,ifnull(b.total_num,0) as total_num from
+        (select "AM" as "APM" union all select "PM" as "APM") a left join
+        (select
+            DATE_FORMAT(yuliu2,'%p') as "APM", SUM(ifnull(dept_peoplenum,0)) as "total_num"
+        from tb_deptup
+        where dept_tjcode = #{hospitalNum}
+        and (yuliu2 between concat(#{time},' 00:00:00') and concat(#{time},' 12:00:00')
+            or yuliu2 between concat(#{time},' 12:00:00') and concat(#{time},' 24:00:00')
+        )
+        GROUP BY DATE_FORMAT(yuliu2,'%p')) b
+        on a.APM = b.APM;
+  </select>
+
+</mapper>

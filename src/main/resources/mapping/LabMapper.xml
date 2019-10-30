@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.LabMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.Lab">
+    <id column="lab_id" jdbcType="INTEGER" property="labId" />
+    <result column="person_idcard" jdbcType="VARCHAR" property="personIdcard" />
+    <result column="liji" jdbcType="VARCHAR" property="liji" />
+    <result column="shanghan" jdbcType="VARCHAR" property="shanghan" />
+    <result column="alt" jdbcType="VARCHAR" property="alt" />
+    <result column="anti_hav" jdbcType="VARCHAR" property="antiHav" />
+    <result column="anti_hev" jdbcType="VARCHAR" property="antiHev" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="qt" jdbcType="VARCHAR" property="qt" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_lab
+    where lab_id = #{labId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.Lab">
+    insert into tb_lab (lab_id, person_idcard, liji, 
+      shanghan, alt, anti_hav, 
+      anti_hev, doctor, qt, 
+      create_time, update_time, yuliu1, 
+      yuliu2, yuliu3, yuliu4, 
+      yuliu5)
+    values (#{labId,jdbcType=INTEGER}, #{personIdcard,jdbcType=VARCHAR}, #{liji,jdbcType=VARCHAR}, 
+      #{shanghan,jdbcType=VARCHAR}, #{alt,jdbcType=VARCHAR}, #{antiHav,jdbcType=VARCHAR}, 
+      #{antiHev,jdbcType=VARCHAR}, #{doctor,jdbcType=VARCHAR}, #{qt,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{yuliu1,jdbcType=VARCHAR}, 
+      #{yuliu2,jdbcType=VARCHAR}, #{yuliu3,jdbcType=VARCHAR}, #{yuliu4,jdbcType=VARCHAR}, 
+      #{yuliu5,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.Lab">
+    update tb_lab
+    set person_idcard = #{personIdcard,jdbcType=VARCHAR},
+      liji = #{liji,jdbcType=VARCHAR},
+      shanghan = #{shanghan,jdbcType=VARCHAR},
+      alt = #{alt,jdbcType=VARCHAR},
+      anti_hav = #{antiHav,jdbcType=VARCHAR},
+      anti_hev = #{antiHev,jdbcType=VARCHAR},
+      doctor = #{doctor,jdbcType=VARCHAR},
+      qt = #{qt,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where lab_id = #{labId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select lab_id, person_idcard, liji, shanghan, alt, anti_hav, anti_hev, doctor, qt, 
+    create_time, update_time, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_lab
+    where lab_id = #{labId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select lab_id, person_idcard, liji, shanghan, alt, anti_hav, anti_hev, doctor, qt, 
+    create_time, update_time, yuliu1, yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_lab
+  </select>
+
+  <!--身份证号查询-->
+  <select id="findByIdCardNum" resultType="com.mdkproject.mdkshiro.entity.Lab">
+    select liji,shanghan,alt,anti_hav,anti_hev from tb_lab where person_idcard = #{personIdcard} limit 1
+  </select>
+</mapper>

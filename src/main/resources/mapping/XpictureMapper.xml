@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdkproject.mdkshiro.dao.XpictureMapper">
+  <resultMap id="BaseResultMap" type="com.mdkproject.mdkshiro.entity.Xpicture">
+    <id column="x_id" jdbcType="INTEGER" property="xId" />
+    <result column="person_idcard" jdbcType="VARCHAR" property="personIdcard" />
+    <result column="x_picture" jdbcType="VARCHAR" property="xPicture" />
+    <result column="doctor" jdbcType="VARCHAR" property="doctor" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
+    <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <result column="yuliu3" jdbcType="VARCHAR" property="yuliu3" />
+    <result column="yuliu4" jdbcType="VARCHAR" property="yuliu4" />
+    <result column="yuliu5" jdbcType="VARCHAR" property="yuliu5" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_x_picture
+    where x_id = #{xId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mdkproject.mdkshiro.entity.Xpicture">
+    insert into tb_x_picture (x_id, person_idcard, x_picture, 
+      doctor, create_time, update_time, 
+      yuliu1, yuliu2, yuliu3, 
+      yuliu4, yuliu5)
+    values (#{xId,jdbcType=INTEGER}, #{personIdcard,jdbcType=VARCHAR}, #{xPicture,jdbcType=VARCHAR}, 
+      #{doctor,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}, #{yuliu3,jdbcType=VARCHAR}, 
+      #{yuliu4,jdbcType=VARCHAR}, #{yuliu5,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mdkproject.mdkshiro.entity.Xpicture">
+    update tb_x_picture
+    set person_idcard = #{personIdcard,jdbcType=VARCHAR},
+      x_picture = #{xPicture,jdbcType=VARCHAR},
+      doctor = #{doctor,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      yuliu1 = #{yuliu1,jdbcType=VARCHAR},
+      yuliu2 = #{yuliu2,jdbcType=VARCHAR},
+      yuliu3 = #{yuliu3,jdbcType=VARCHAR},
+      yuliu4 = #{yuliu4,jdbcType=VARCHAR},
+      yuliu5 = #{yuliu5,jdbcType=VARCHAR}
+    where x_id = #{xId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select x_id, person_idcard, x_picture, doctor, create_time, update_time, yuliu1, 
+    yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_x_picture
+    where x_id = #{xId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select x_id, person_idcard, x_picture, doctor, create_time, update_time, yuliu1, 
+    yuliu2, yuliu3, yuliu4, yuliu5
+    from tb_x_picture
+  </select>
+
+  <!--身份证号查询-->
+  <select id="findByIdCardNum" resultType="com.mdkproject.mdkshiro.entity.Xpicture">
+    select x_picture from tb_x_picture where person_idcard = #{personIdcard} limit 1
+  </select>
+</mapper>
